@@ -1,13 +1,15 @@
 var xhr = new XMLHttpRequest();
-
 var url = './health_article.json';
 
 xhr.open('GET', url, true);
-
 xhr.responseType = 'json';
 
+xhr.onload = function() {
+    if (xhr.status === 200) {
 var articles = xhr.response.articles;
+console.log("got articles " + articles.length)
 var articlesDiv = document.getElementById('articles');
+console.log("got articlesDiv " + articlesDiv.length)
 
 articles.forEach(function(article) {
     var articleDiv = document.createElement('div');
@@ -54,5 +56,9 @@ articles.forEach(function(article) {
   articleDiv.classList.add('article');
 
   articleDiv.appendChild(title);
+    } else {
+        console.error('Request failed:', xhr.status);
+    }
+};
 
   xhr.send();
